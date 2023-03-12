@@ -87,10 +87,7 @@ public class studentController {
         return modelAndView;
     }
 
-    // @PutMapping("/updateStudent")
-    // public void test() {
-    //     System.out.println("測試");
-    // }
+
     @PutMapping("/updateStudent")
     public void updateStudent(@RequestBody Map<String ,String>student) {
         System.out.println("put測試");
