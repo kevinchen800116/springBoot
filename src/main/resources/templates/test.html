@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!--thymeleaf模板支持-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.serializeJSON/3.2.1/jquery.serializejson.min.js" integrity="sha512-SdWDXwOhhVS/wWMRlwz3wZu3O5e4lm2/vKK3oD0E5slvGFg/swCYyZmts7+6si8WeJYIUsTrT3KZWWCknSopjg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+<div>
+   <!-- 显示由控制器传递过来的实体user的值-->
+    <h2>新增學生會員</h2>
+    <form id="form1" action="#" th:action="@{/api/v1/student/add}" th:object="${empty}" method="POST">
+        <label for="name">姓名:</label>
+        <input id="name" name="name" type="text" th:field="*{name}"/>
+        <label for="email">電子郵件:</label>
+        <input id="email" name="email" type="text" th:field="*{email}"/>
+        <label for="age">年齡:</label>
+        <input id="age" name="age" type="text" th:field="*{age}"/>
+        <input type="submit"/>
+    </form>
+
+    <ul th:each="student: ${user}">
+
+        <li>
+            <span>姓名:</span>
+            <span th:text="${student.name}"></span>
+        </li>
+        <li>
+            <span>電子郵件:</span>
+            <span th:text="${student.email}"></span>
+        </li>
+        <li>
+            <span>年齡:</span>
+            <span th:text="${student.age}"></span>
+        </li>
+        <button th:onclick="Update([[${student.email}]]);">更新</button>
+        <button  th:onclick="deleteID([[${student.email}]]);">刪除</button>
+    </ul>
+
+</div>
+<script>
+    function add(){
+        console.log("目前表單沒有用ajax delete有")
+        var datas = $("#form1").serializeJSON();
+        console.log(datas)
+        $.ajax({
+            url:"add",
+            type:"post",
+            data:JSON.stringify({datas}),
+            contentType:"application/json;charset=UTF-8",
+            success: function(data){
+                alert("請求成功!")
+            },
+            error: function(){
+                alert("請求失敗!")
+            }
+        })
+    }
+    function deleteID(email){
+        console.log(email);
+        $.ajax({
+            url:"del",
+            type:"delete",
+            data:email,
+            contentType:"application/json;charset=UTF-8",
+            success: function(data){
+                alert("刪除成功!")
+                location.reload();
+            },
+            error: function(){
+                alert("請求失敗!")
+            }
+        })
+    }
+    function Update(email){
+        console.log("更新");
+        $.ajax({
+            url:"update"+"/"+email,
+            type:"GET",
+            data:"",
+            contentType:"application/json;charset=UTF-8",
+            success: function(data){
+                console.log("進入更新頁面成功!")
+                // ajax跳轉網址
+                window.location.href="http://localhost:8080/api/v1/student/update/"+email;
+            },
+            error: function(){
+                alert("請求失敗!")
+            }
+        })
+    }
+
+</script>
+ </body>
+</html>
