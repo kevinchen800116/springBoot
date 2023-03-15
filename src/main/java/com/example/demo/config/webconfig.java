@@ -9,7 +9,7 @@ public class webconfig implements WebMvcConfigurer{
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/api/v1/student/add").setViewName("test");
+        registry.addViewController("/").setViewName("index");
     }
 }
 
