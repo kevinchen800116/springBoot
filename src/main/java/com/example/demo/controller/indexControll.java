@@ -27,9 +27,7 @@ public class indexControll {
         ModelAndView modelAndView=new ModelAndView("index");
         // 將查詢的值塞入頁面內
         modelAndView.addObject("user", user);
-        // 創建空的物件給前端頁面
-        student emptyStudent = new student();
-        modelAndView.addObject("empty", emptyStudent);
+
         return modelAndView;
     }
 

@@ -48,7 +48,7 @@ public class studentController {
         // DB取值查詢
         Iterable<student> user = studentService.getStudent();
         // 創建對應的html頁面
-        ModelAndView modelAndView=new ModelAndView("index");
+        ModelAndView modelAndView=new ModelAndView("test");
         // 將查詢的值塞入頁面內
         modelAndView.addObject("user", user);
         // 創建空的物件給前端頁面
